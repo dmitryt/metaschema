@@ -80,7 +80,7 @@ metatests.test('Schema: nested json', (test) => {
   const definition = {
     field1: 'string',
     field2: {
-      json: {
+      schema: {
         subfield1: 'number',
         subfield2: 'string',
       },
