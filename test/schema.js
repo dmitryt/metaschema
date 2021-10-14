@@ -98,6 +98,30 @@ metatests.test('Schema: nested json', (test) => {
   test.end();
 });
 
+metatests.test('Schema: required nested json', (test) => {
+  const definition = {
+    field1: 'string',
+    struct: {
+      required: false,
+      schema: {
+        subfield1: 'string',
+      },
+    },
+  };
+  const schema = Schema.from(definition);
+
+  const obj1 = { field1: 'value' };
+  test.strictSame(schema.check(obj1, '', true).valid, true);
+
+  const obj2 = { field1: 'value', struct: { subfield1: 1 } };
+  test.strictSame(schema.check(obj2).valid, false);
+
+  const obj3 = { field1: 'value', struct: { subfield1: 'value' } };
+  test.strictSame(schema.check(obj3).valid, true);
+
+  test.end();
+});
+
 metatests.test('Schema: nested json, lost field', (test) => {
   const definition = {
     field1: 'string',
